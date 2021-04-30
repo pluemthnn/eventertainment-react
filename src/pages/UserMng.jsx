@@ -1,4 +1,30 @@
 import "../components/admin.css";
+import styled from "styled-components";
+
+const Divresult = styled.div`
+    background-color: rgb(255, 226, 230);
+    box-shadow: 12px 12px 22px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    width: 90vh;
+    height: 100%;
+    margin: 20px 0px;
+`
+
+const Mytable = styled.table`
+  border-collapse: collapse;
+  width: 100%;
+`
+
+const Mttd = styled.td`
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+`
+const Mtth = styled.th`
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+`
 
 class UserMngpage extends React.Component {
   userinsert() {
@@ -123,24 +149,36 @@ class UserMngpage extends React.Component {
       .catch((err) => console.log(err));
   }
 
-  usersearchall() {
+  async usersearchall() {
     let output = document.getElementById("result1");
-    let text = "";
 
-    fetch("http://localhost:3030/user_data/", { method: "GET" })
+    await fetch("http://localhost:3030/user_data/", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         alert(data.message);
+        let table = `
+        <tr> 
+          <td> Name </td>
+          <td> Email </td>
+          <td> Date of Birth </td>
+          <td> Phone Number </td>
+        </tr>`
         for (const x of data.data) {
-          text += `User Name: ${x.Username}<br>`;
-          text += `User Password: ${x.User_pwd}<br>`;
-          text += `Email: ${x.Email}<br>`;
-          text += `Name: ${x.Fname} ${x.Lname}<br>`;
-          text += `Date of Birth: ${x.DOB}<br>`;
-          text += `Phone Number: ${x.Phone}<br>`;
-          text += "<br>";
+          table += `<tr>
+          <td> ${x.Fname} ${x.Lname} </td>
+          <td> ${x.Email} </td>
+          <td> ${x.DOB} </td>
+          <td> ${x.Phone} </td>
+          </tr>`
+          // table += `User Name: ${x.Username}<br>`;
+          // table += `User Password: ${x.User_pwd}<br>`;
+          // table += `Email: ${x.Email}<br>`;
+          // table += `Name: ${x.Fname} ${x.Lname}<br>`;
+          // table += `Date of Birth: ${x.DOB}<br>`;
+          // table += `Phone Number: ${x.Phone}<br>`;
+          // table += "<br>";
         }
-        output.innerHTML = text;
+        output.innerHTML = table;
       })
       .catch((err) => console.log(err));
   }
@@ -232,8 +270,10 @@ class UserMngpage extends React.Component {
           </button>
           <br></br>
           <br></br>
-          <div id="result1"></div>
+          <table id="result1">
+          </table>
         </div>
+        {/* <Divresult id="result1"></Divresult> */}
       </div>
     );
   }

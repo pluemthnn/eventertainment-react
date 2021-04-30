@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Divfooter = styled.div`
-    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
