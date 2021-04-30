@@ -38,12 +38,12 @@ function NavigationBar() {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link to="/" className="nav-link">
-                  Events
+                  for Creators
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/aboutus" className="nav-link">
-                  About Us
+                <Link to="/UserMng" className="nav-link">
+                  User Management
                 </Link>
               </li>
               <li className="nav-item">

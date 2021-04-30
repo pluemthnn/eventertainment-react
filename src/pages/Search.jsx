@@ -5,6 +5,21 @@ const Divformrow = styled.div`
     border-radius: 30px;
     box-shadow: 12px 12px 22px rgba(0, 0, 0, 0.1);
 `
+const MyBtn = styled.button`
+    border: none;
+    outline: none;
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    &:hover{
+        background-color: white;
+        border: 1px solid black;
+        color: black;
+    }
+`
+
+
 
 const SearchPage = () => {
     return (
@@ -61,7 +76,7 @@ const SearchPage = () => {
                             </select>
                         </div>
                         <div className="col-lg-1 py-1 col-md-3 col-sm-12 px-1">
-                            <button type="submit" className="btn">Search</button>
+                            <MyBtn type="submit" className="btn">Search</MyBtn>
                         </div>
                     </Divformrow>
                 </form>
