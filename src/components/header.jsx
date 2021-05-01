@@ -36,19 +36,19 @@ function NavigationBar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
+              <li className="nav-item py-2">
                 <Link to="/" className="nav-link">
                   for Creators
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item py-2">
                 <Link to="/UserMng" className="nav-link">
-                  User Management
+                  User Manage
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item py-2">
                 <Link to="/EventMng" className="nav-link">
-                  Event Management
+                  Event Manage
                 </Link>
               </li>
             </ul>

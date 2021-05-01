@@ -23,12 +23,12 @@ const MyRow = styled.div`
 `;
 const HomePage = (props) => {
   return (
-    <body className="my-3">
+    <div className="my-3">
       <div className="container">
         <h1 className="mt-4">Welcome to Admin Homepage</h1>
         <MyRow>
-          <h2>All event</h2>
-          <img src="https://www.flaticon.com/svg/vstatic/svg/1636/1636028.svg?token=exp=1619852446~hmac=a8a356ed90f97dc04c8652a733c8db4c" />
+          {/* <h2>All event</h2> */}
+          <img src="https://www.flaticon.com/svg/vstatic/svg/1636/1636028.svg?token=exp=1619904228~hmac=cdf9157c4ca84511864934be2fbff077" />
 
           <h5 className="py-3">Let's manage our lovely event</h5>
           <Button
@@ -37,12 +37,11 @@ const HomePage = (props) => {
               props.history.push("/EventMng");
             }}
           >
-            
             Manage event
           </Button>
         </MyRow>
       </div>
-    </body>
+    </div>
   );
 };
 

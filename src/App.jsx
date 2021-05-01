@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import UserMng from './pages/UserMng'
 import EventMng from './pages/EventMng'
 import Result from './pages/Result'
+import Resulte from './pages/ResultE'
 import Login from './pages/Login'
 
 
@@ -15,16 +16,18 @@ function App() {
     <>
       <Navbar />
       <Switch>
-        <Route exact path='/' component={Home}/>
-        {/* <Route exact path='/aboutus' component={AboutUs}/> */}
-        {/* <Route exact path='/search' component={Search}/> */}
-        <Route exact path='/UserMng' component={UserMng}/>
-        <Route exact path='/EventMng' component={EventMng}/>
-        <Route exact path='/Login' component={Login}/>
-        <Route exact path='/Result' component={Result}/>
+          <Route exact path='/' component={Home}/>
+          {/* <Route exact path='/aboutus' component={AboutUs}/> */}
+          {/* <Route exact path='/search' component={Search}/> */}
+          <Route exact path='/UserMng' component={UserMng}/>
+          <Route exact path='/EventMng' component={EventMng}/>
+          <Route exact path='/Login' component={Login}/>
+          {/* <Route exact path='/Result' component={Result}/> */}
+          <Route exact path='/Resulte' component={Resulte}/>
+       {/* <Route exact path='/Result/:' component={Result}/> */}
+          <Route exact path="/Result/:username" component={Result} />
       </Switch>
-      <Footerbar />
-      
+      <Footerbar/> 
     </>
   );
 }

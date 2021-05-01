@@ -1,19 +1,27 @@
 import "../components/admin.css";
 import DayJS from 'react-dayjs';
-
+import { Link } from 'react-router-dom'
 import styled from "styled-components";
 
 const Mytable = styled.table`
   border-collapse: collapse;
   padding: 3;
   width: 100%;
-  background-color: white;
 `
 
-const Mttd = styled.td`
-  border: 1px solid #000000;
-  text-align: left;
+const Mytd = styled.td`
+  // border: 3px solid #000000;
+  vertical-align: middle;
+  text-align: middle;
   padding: 8px;
+`
+const Mytbody = styled.tbody`
+  color: white;
+  background-color: #f06e7e;
+  &:nth-child(even) {
+    color: black;
+    background: #ffe7ea;
+  }
 `
 
 const Button = styled.button`
@@ -148,19 +156,21 @@ class UserMngpage extends React.Component {
   async handleusersearch(changeObject) {
     changeObject.preventDefault();
     let usr_name = document.getElementById("txtusername").value;
-
-    await fetch("http://localhost:3030/user_data/" + usr_name, {
+    let usr_email = document.getElementById("txtemail").value;
+    let usr_fname = document.getElementById("txtfname").value;
+    let usr_lname = document.getElementById("txtlname").value;
+    let usr_bd = document.getElementById("cldBD").value;
+    let usr_phone = document.getElementById("txtphone").value;
+    await fetch(`http://localhost:3030/user_datasearch?Username=${usr_name}&Email=${usr_email}&Fname=${usr_fname}&Lname=${usr_lname}&DOB=${usr_bd}&Phone=${usr_phone}`, {
       method: "GET",
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.data == undefined || data.data.Username == undefined) {
+        if (data.data[0] == undefined || data.data[0].Username == undefined) {
           alert("No user found");
         } else {
-          var result = Object.values(data);
-          console.log(result);
           this.setState({
-            userdata: result,
+            userdata: data.data,
           });
         }
       })
@@ -187,13 +197,13 @@ class UserMngpage extends React.Component {
             <br></br><h1 className="pt-3">User Management</h1><br></br>
             <input type="text" className="input1" id="txtusername" placeholder="Username" />
             <br />
-            <input type="text" className="input1" id="txtpwd" placeholder="Password"/>
+            <input type="text" className="input1" id="txtpwd" placeholder="Password" />
             <br />
-            <input type="text" className="input1" id="txtemail" placeholder="E-mail"/>
+            <input type="text" className="input1" id="txtemail" placeholder="E-mail" />
             <br />
-            <input type="text" className="input1" id="txtfname" placeholder="First name"/>
+            <input type="text" className="input1" id="txtfname" placeholder="First name" />
             <br />
-            <input type="text" className="input1" id="txtlname" placeholder="Last name"/>
+            <input type="text" className="input1" id="txtlname" placeholder="Last name" />
             <br />
             <input type="date" className="input1" id="cldBD" />
             <br />
@@ -216,24 +226,24 @@ class UserMngpage extends React.Component {
               Delete
           </button>
             <div className="pb-5 pt-4" style={{ justifyContent: "center" }}>
-              <Mytable>
+              <Mytable className="pt-5">
                 {this.state.userdata &&
                   this.state.userdata.map((i) => {
                     return (
-                      <tbody  key={i.Username}>
+                      <Mytbody key={i.Username}>
                         <tr >
-                          <Mttd>{i.Username}</Mttd>
+                          <Mytd style={{fontSize: "20px"}}>{i.Username}</Mytd>
                           {/* <td>{i.User_pwd}</td> */}
-                          {/* <Mttd>{i.Email}</Mttd> */}
-                          <Mttd>{i.Fname} {i.Lname}</Mttd>
-                          {/* <Mttd><DayJS format="MM-DD-YYYY">{i.DOB}</DayJS></Mttd> */}
-                          {/* <Mttd>{i.Phone}</Mttd> */}
-                          <Mttd><Button type="button"
-                          onClick={() => {
-                          this.props.history.push("/Result");
-                          }}>Infomation</Button></Mttd>
+                          {/* <Mytd>{i.Email}</Mytd> */}
+                          <Mytd style={{fontSize: "20px"}}>{i.Fname} {i.Lname}</Mytd>
+                          {/* <Mytd><DayJS format="MM-DD-YYYY">{i.DOB}</DayJS></Mytd> */}
+                          {/* <Mytd>{i.Phone}</Mytd> */}
+                          <Mytd style={{fontSize: "16px", paddingRight: "1rem"}}><Link to={`/Result/${i.Username}`}><Button type="button"
+                            onClick={() => {
+                              this.props.history.push("/Result/${i.Username}");
+                            }} style={{marginTop: "1rem", marginBottom: "1rem"}}>Information</Button></Link></Mytd>
                         </tr>
-                      </tbody>
+                      </Mytbody>
                     );
                   })}
               </Mytable>

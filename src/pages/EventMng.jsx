@@ -1,6 +1,8 @@
 import "../components/admin.css";
 import styled from "styled-components";
 
+
+
 const Mytable = styled.table`
   border-collapse: collapse;
   padding: 3;
@@ -8,9 +10,9 @@ const Mytable = styled.table`
   background-color: white;
 `
 
-const Mttd = styled.td`
-  border: 1px solid #000000;
-  text-align: left;
+const Mytd = styled.td`
+  vertical-align: middle;
+  text-align: middle;
   padding: 8px;
 `
 
@@ -145,16 +147,22 @@ class EventMngpage extends React.Component {
   async handleeventsearch(changeObject) {
     changeObject.preventDefault();
     let event_id = document.getElementById("txteventID").value;
-    fetch("http://localhost:3030/event_data/" + event_id, { method: "GET" })
+    let event_name = document.getElementById("txteventName").value;
+    let event_dt = document.getElementById("txteventDT").value;
+    let event_location = document.getElementById("txtlocation").value;
+    let event_type = document.getElementById("Event_type").value;
+    let event_desc = document.getElementById("txtdesc").value;
+    fetch(
+      `http://localhost:3030/event_datasearch?EventID=${event_id}&EventName=${event_name}&DateTime=${event_dt}&Location=${event_location}&EventType=${event_type}&EventDesc=${event_desc}`,
+      { method: "GET" }
+    )
       .then((res) => res.json())
       .then((data) => {
-        if (data.data == undefined || data.data.EventID == undefined) {
+        if (data.data[0] == undefined || data.data[0].EventID == undefined) {
           alert("No event found");
         } else {
-          var result = Object.values(data);
-          console.log(result);
           this.setState({
-            eventdata: result,
+            eventdata: data.data,
           });
         }
       })
@@ -175,17 +183,9 @@ class EventMngpage extends React.Component {
 
   render() {
     return (
-      <div
-        className="container"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "center",}}>
         <div id="box">
-          <br></br>Event Management<br></br>
-          <br></br>
+          <br></br><h1 className="pt-3">Event Management</h1><br></br>
           <input
             type="text"
             className="input1"
@@ -222,6 +222,7 @@ class EventMngpage extends React.Component {
           />
           <br />
           <select className="input1" id="Event_type">
+          <option value="">Event Type</option>
             <option value="Comedy">Comedy</option>
             <option value="E-sport">E-sport</option>
             <option value="Concert">Concert</option>
@@ -283,16 +284,16 @@ class EventMngpage extends React.Component {
               this.state.eventdata.map((i) => {
                 return (
                   <tbody key={i.EventID}>
-                    <Mttd>{i.EventID}</Mttd>
-                    <Mttd>{i.Eventname}</Mttd>
+                    <Mytd>{i.EventID}</Mytd>
+                    <Mytd>{i.Eventname}</Mytd>
                     {/* <p>{i.DATE_TIME}</p>
                     <p>{i.Location}</p>
                     <p>{i.Event_Description}</p> */}
-                    <Mttd>{i.Eventtype}</Mttd>
-                    <Mttd><Button type="button"
+                    <Mytd>{i.Eventtype}</Mytd>
+                    <Mytd><Button type="button"
                           onClick={() => {
-                          this.props.history.push("/Result");
-                          }}>Infomation</Button></Mttd>
+                          this.props.history.push("/Resulte");
+                          }}>Infomation</Button></Mytd>
                     {/* <img src={i.imgURL} width="20%"></img> */}
                   </tbody>
                 );
