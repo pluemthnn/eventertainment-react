@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom'
 import Home from './pages/Home'
 import UserMng from './pages/UserMng'
 import EventMng from './pages/EventMng'
-import Search from './pages/Search'
+import Result from './pages/Result'
 import Login from './pages/Login'
 
 
@@ -21,6 +21,7 @@ function App() {
         <Route exact path='/UserMng' component={UserMng}/>
         <Route exact path='/EventMng' component={EventMng}/>
         <Route exact path='/Login' component={Login}/>
+        <Route exact path='/Result' component={Result}/>
       </Switch>
       <Footerbar />
       

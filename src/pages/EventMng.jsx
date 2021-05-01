@@ -1,26 +1,49 @@
 import "../components/admin.css";
+import styled from "styled-components";
 
-const options = [
-  { value: "Comedy", label: "Comedy" },
-  { value: "E-sport", label: "E-sport" },
-  { value: "Concert", label: "Concert" },
-  { value: "Art-design", label: "Art-design" },
-];
+const Mytable = styled.table`
+  border-collapse: collapse;
+  padding: 3;
+  width: 100%;
+  background-color: white;
+`
+
+const Mttd = styled.td`
+  border: 1px solid #000000;
+  text-align: left;
+  padding: 8px;
+`
+
+const Button = styled.button`
+  border: none;
+  outline: none;
+  height: 50px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+`;
 
 class EventMngpage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedtype: "",
+      eventdata: [],
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleeventsearchall = this.handleeventsearchall.bind(this);
+    this.handleeventsearch = this.handleeventsearch.bind(this);
   }
-  handleChange(e) {
-    const target = e.target;
-    const value = target.value;
-    const elementname = target.name;
+
+  handleChange(changeObject) {
     this.setState({
-      [elementname]: value,
+      [changeObject.target.name]: changeObject.target.value,
     });
   }
 
@@ -119,67 +142,38 @@ class EventMngpage extends React.Component {
       .catch((err) => console.log(err));
   }
 
-  eventsearch() {
-    let output = document.getElementById("result2");
-    let text = "";
+  async handleeventsearch(changeObject) {
+    changeObject.preventDefault();
     let event_id = document.getElementById("txteventID").value;
-
     fetch("http://localhost:3030/event_data/" + event_id, { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         if (data.data == undefined || data.data.EventID == undefined) {
           alert("No event found");
         } else {
-          const x = data.data;
-          alert("retrieved event");
-          text += `Event ID: ${x.EventID}<br>`;
-          text += `Event Name: ${x.Eventname}<br>`;
-          text += `Date & Time: ${x.DATE_TIME}<br>`;
-          text += `Location: ${x.Location}<br>`;
-          text += `Description: ${x.Event_Description}<br>`;
-          text += `Type: ${x.Eventtype}<br>`;
-          text += `<img src="${x.imgURL}" width="20%"><br>`;
-          text += "<br>";
-          output.innerHTML = text;
+          var result = Object.values(data);
+          console.log(result);
+          this.setState({
+            eventdata: result,
+          });
         }
       })
       .catch((err) => console.log(err));
   }
 
-  eventsearchall() {
-    let output = document.getElementById("result2");
-    let text = "";
-
+  async handleeventsearchall(changeObject) {
+    changeObject.preventDefault();
     fetch("http://localhost:3030/event_data/", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
-        alert(data.message);
-        for (const x of data.data) {
-          text += `Event ID: ${x.EventID}<br>`;
-          text += `Event Name: ${x.Eventname}<br>`;
-          text += `Date & Time: ${x.DATE_TIME}<br>`;
-          text += `Location: ${x.Location}<br>`;
-          text += `Description: ${x.Event_Description}<br>`;
-          text += `Type: ${x.Eventtype}<br>`;
-          text += `<img src="${x.imgURL}" width="20%"><br>`;
-          text += "<br>";
-        }
-        output.innerHTML = text;
+        this.setState({
+          eventdata: data.data,
+        });
       })
       .catch((err) => console.log(err));
   }
 
-  state = {
-    selectedOption: null,
-  };
-
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
-  };
-
   render() {
-    const { selectedOption } = this.state;
     return (
       <div
         className="container"
@@ -246,7 +240,7 @@ class EventMngpage extends React.Component {
             type="submit"
             className="btn"
             id="selectall2"
-            onClick={this.eventsearchall}
+            onClick={this.handleeventsearchall}
           >
             All Event
           </button>
@@ -254,7 +248,7 @@ class EventMngpage extends React.Component {
             type="submit"
             className="btn"
             id="select2"
-            onClick={this.eventsearch}
+            onClick={this.handleeventsearch}
           >
             Search
           </button>
@@ -282,9 +276,29 @@ class EventMngpage extends React.Component {
           >
             Delete
           </button>
-          <br />
-          <br />
-          <div id="result2"></div>
+        
+          <div className="pb-5 pt-4" style={{ justifyContent: "center" }}>
+          <Mytable>
+            {this.state.eventdata &&
+              this.state.eventdata.map((i) => {
+                return (
+                  <tbody key={i.EventID}>
+                    <Mttd>{i.EventID}</Mttd>
+                    <Mttd>{i.Eventname}</Mttd>
+                    {/* <p>{i.DATE_TIME}</p>
+                    <p>{i.Location}</p>
+                    <p>{i.Event_Description}</p> */}
+                    <Mttd>{i.Eventtype}</Mttd>
+                    <Mttd><Button type="button"
+                          onClick={() => {
+                          this.props.history.push("/Result");
+                          }}>Infomation</Button></Mttd>
+                    {/* <img src={i.imgURL} width="20%"></img> */}
+                  </tbody>
+                );
+              })}
+          </Mytable>  
+          </div>
         </div>
       </div>
     );

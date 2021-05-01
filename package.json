@@ -7,9 +7,11 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "dayjs": "^1.10.4",
     "express": "^4.17.1",
     "mysql2": "^2.2.5",
     "react": "^17.0.0",
+    "react-dayjs": "^0.3.2",
     "react-dom": "^17.0.0",
     "react-router-dom": "^5.2.0",
     "styled-components": "^5.2.3"
