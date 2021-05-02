@@ -5,6 +5,7 @@ import DayJS from 'react-dayjs';
 import { render } from 'react-dom';
 
 const MyRow = styled.div`
+    text-align: left;
     margin-top:30px;
     background-color: rgb(255, 231, 234);
     border-radius: 30px;
@@ -39,11 +40,11 @@ const resultepage = () => {
         <div className="my-3">
             <div className="container">
                 <MyRow>
-                    <h1 className="pt-3">Event Information</h1>
+                    <h1 style={{paddingTop: "2.5rem", textAlign: "center"}}>Event Information</h1>
                     {eventlist &&
                         eventlist.map((i) => {
                             return (
-                                <section className="Form my-4 mx-5" key={i.EventID}>
+                                <section className="Form my-4 mx-5" key={i.EventID} style={{paddingBottom: "3rem"}}>
                                     <div className="container">
                                         <div className="row no-gutters">
                                             <div className="col-lg-5">
