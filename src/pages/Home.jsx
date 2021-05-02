@@ -25,7 +25,7 @@ const HomePage = (props) => {
   return (
     <body className="my-3">
       <div className="container">
-        <h1 className="mt-4">Welcom to Admin Homepage</h1>
+        <h1 className="mt-4">Welcome to Admin Homepage</h1>
         <MyRow>
           <h2>All event</h2>
           <img src="https://www.flaticon.com/svg/vstatic/svg/1636/1636028.svg?token=exp=1619852446~hmac=a8a356ed90f97dc04c8652a733c8db4c" />
@@ -37,7 +37,7 @@ const HomePage = (props) => {
               props.history.push("/EventMng");
             }}
           >
-            {" "}
+            
             Manage event
           </Button>
         </MyRow>

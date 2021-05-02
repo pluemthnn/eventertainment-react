@@ -1,32 +1,61 @@
 import "../components/admin.css";
+// import DayJS from "dayjs";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-
-const Divresult = styled.div`
-    background-color: rgb(255, 226, 230);
-    box-shadow: 12px 12px 22px rgba(0, 0, 0, 0.1);
-    border-radius: 30px;
-    width: 90vh;
-    height: 100%;
-    margin: 20px 0px;
-`
 
 const Mytable = styled.table`
   border-collapse: collapse;
+  padding: 3;
   width: 100%;
-`
+`;
 
-const Mttd = styled.td`
-  border: 1px solid #dddddd;
+const Mytd = styled.td`
+  // border: 3px solid #000000;
   text-align: left;
   padding: 8px;
-`
-const Mtth = styled.th`
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-`
+`;
+const Mytbody = styled.tbody`
+  color: white;
+  background-color: #f06e7e;
+  &:nth-child(even) {
+    color: black;
+    background: #ffe7ea;
+  }
+`;
+
+const Button = styled.button`
+  border: none;
+  outline: none;
+  height: 50px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+`;
 
 class UserMngpage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userdata: [],
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleusersearchall = this.handleusersearchall.bind(this);
+    this.handleusersearch = this.handleusersearch.bind(this);
+  }
+
+  handleChange(changeObject) {
+    this.setState({
+      [changeObject.target.name]: changeObject.target.value,
+    });
+  }
+
   userinsert() {
     let usr_name = document.getElementById("txtusername").value;
     let usr_pwd = document.getElementById("txtpwd").value;
@@ -77,7 +106,6 @@ class UserMngpage extends React.Component {
       Lname: usr_lname,
       DOB: usr_bd,
       Phone: usr_phone,
-      user_role: "1",
     };
 
     fetch("http://localhost:3030/user-form-update/", {
@@ -124,157 +152,176 @@ class UserMngpage extends React.Component {
       .catch((err) => console.log(err));
   }
 
-  usersearch() {
-    let output = document.getElementById("result1");
-    let text = "";
+  async handleusersearch(changeObject) {
+    changeObject.preventDefault();
     let usr_name = document.getElementById("txtusername").value;
 
-    fetch("http://localhost:3030/user_data/" + usr_name, { method: "GET" })
+    await fetch("http://localhost:3030/user_data/" + usr_name, {
+      method: "GET",
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data.data == undefined || data.data.Username == undefined) {
           alert("No user found");
         } else {
-          alert("retrieved user");
-          text += `User Name: ${data.data.Username}<br>`;
-          text += `User Password: ${data.data.User_pwd}<br>`;
-          text += `Email: ${data.data.Email}<br>`;
-          text += `Name: ${data.data.Fname} ${data.data.Lname}<br>`;
-          text += `Date of Birth: ${data.data.DOB}<br>`;
-          text += `Phone Number: ${data.data.Phone}<br>`;
-          text += "<br>";
-          output.innerHTML = text;
+          var result = Object.values(data);
+          this.setState({
+            userdata: result,
+          });
         }
       })
       .catch((err) => console.log(err));
   }
 
-  async usersearchall() {
-    let output = document.getElementById("result1");
-
+  async handleusersearchall(changeObject) {
+    changeObject.preventDefault();
     await fetch("http://localhost:3030/user_data/", { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
-        alert(data.message);
-        let table = `
-        <tr> 
-          <td> Name </td>
-          <td> Email </td>
-          <td> Date of Birth </td>
-          <td> Phone Number </td>
-        </tr>`
-        for (const x of data.data) {
-          table += `<tr>
-          <td> ${x.Fname} ${x.Lname} </td>
-          <td> ${x.Email} </td>
-          <td> ${x.DOB} </td>
-          <td> ${x.Phone} </td>
-          </tr>`
-          // table += `User Name: ${x.Username}<br>`;
-          // table += `User Password: ${x.User_pwd}<br>`;
-          // table += `Email: ${x.Email}<br>`;
-          // table += `Name: ${x.Fname} ${x.Lname}<br>`;
-          // table += `Date of Birth: ${x.DOB}<br>`;
-          // table += `Phone Number: ${x.Phone}<br>`;
-          // table += "<br>";
-        }
-        output.innerHTML = table;
+        this.setState({
+          userdata: data.data,
+        });
       })
       .catch((err) => console.log(err));
   }
 
   render() {
     return (
-      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "center", }}>
-        <div id="box">
-          <br></br>User Management<br></br>
-          <br></br>
-          <input type="text" className="input1" id="txtusername" placeholder="Username" />
-          <br />
-          <input
-            type="text"
-            className="input1"
-            id="txtpwd"
-            placeholder="Password"
-          />
-          <br />
-          <input
-            type="text"
-            className="input1"
-            id="txtemail"
-            placeholder="E-mail"
-          />
-          <br />
-          <input
-            type="text"
-            className="input1"
-            id="txtfname"
-            placeholder="First name"
-          />
-          <br />
-          <input
-            type="text"
-            className="input1"
-            id="txtlname"
-            placeholder="Last name"
-          />
-          <br />
-          <input type="date" className="input1" id="cldBD" />
-          <br />
-          <input
-            type="text"
-            className="input1"
-            id="txtphone"
-            placeholder="Phone"
-          />
-          <br />
-          <button
-            type="submit"
-            className="btn"
-            id="selectall"
-            onClick={this.usersearchall}
-          >
-            All User
-          </button>
-          <button
-            type="submit"
-            className="btn"
-            id="select"
-            onClick={this.usersearch}
-          >
-            Search
-          </button>
-          <button
-            type="submit"
-            className="btn"
-            id="insert"
-            onClick={this.userinsert}
-          >
-            Insert
-          </button>
-          <button
-            type="submit"
-            className="btn"
-            id="update"
-            onClick={this.userupdate}
-          >
-            Update
-          </button>
-          <button
-            type="submit"
-            className="btn"
-            id="delete"
-            onClick={this.userdelete}
-          >
-            Delete
-          </button>
-          <br></br>
-          <br></br>
-          <table id="result1">
-          </table>
+      <>
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <section id="box">
+            <br></br>
+            <h1 className="pt-3">User Management</h1>
+            <br></br>
+            <input
+              type="text"
+              className="input1"
+              id="txtusername"
+              placeholder="Username"
+            />
+            <br />
+            <input
+              type="text"
+              className="input1"
+              id="txtpwd"
+              placeholder="Password"
+            />
+            <br />
+            <input
+              type="text"
+              className="input1"
+              id="txtemail"
+              placeholder="E-mail"
+            />
+            <br />
+            <input
+              type="text"
+              className="input1"
+              id="txtfname"
+              placeholder="First name"
+            />
+            <br />
+            <input
+              type="text"
+              className="input1"
+              id="txtlname"
+              placeholder="Last name"
+            />
+            <br />
+            <input type="date" className="input1" id="cldBD" />
+            <br />
+            <input
+              type="text"
+              className="input1"
+              id="txtphone"
+              placeholder="Phone"
+            />
+            <br />
+            <button
+              type="submit"
+              className="btn"
+              id="selectall"
+              onClick={this.handleusersearchall}
+            >
+              All User
+            </button>
+            <button
+              type="submit"
+              className="btn"
+              id="select"
+              onClick={this.handleusersearch}
+            >
+              Search
+            </button>
+            <button
+              type="submit"
+              className="btn"
+              id="insert"
+              onClick={this.userinsert}
+            >
+              Insert
+            </button>
+            <button
+              type="submit"
+              className="btn"
+              id="update"
+              onClick={this.userupdate}
+            >
+              Update
+            </button>
+            <button
+              type="submit"
+              className="btn"
+              id="delete"
+              onClick={this.userdelete}
+            >
+              Delete
+            </button>
+            <div className="pb-5 pt-4" style={{ justifyContent: "center" }}>
+              <Mytable>
+                {this.state.userdata &&
+                  this.state.userdata.map((i) => {
+                    return (
+                      <Mytbody key={i.Username}>
+                        <tr>
+                          <Mytd>{i.Username}</Mytd>
+                          {/* <td>{i.User_pwd}</td> */}
+                          {/* <Mytd>{i.Email}</Mytd> */}
+                          <Mytd>
+                            {i.Fname} {i.Lname}
+                          </Mytd>
+                          {/* <Mytd><DayJS format="MM-DD-YYYY">{i.DOB}</DayJS></Mytd> */}
+                          {/* <Mytd>{i.Phone}</Mytd> */}
+                          <Mytd style={{ justifyItems: "center" }}>
+                            <Link to={`/Result/${i.Username}`}>
+                              <Button
+                                type="button"
+                                onClick={() => {
+                                  this.props.history.push(
+                                    "/Result/${i.Username}"
+                                  );
+                                }}
+                              >
+                                Infomation
+                              </Button>
+                            </Link>
+                          </Mytd>
+                        </tr>
+                      </Mytbody>
+                    );
+                  })}
+              </Mytable>
+            </div>
+          </section>
         </div>
-        {/* <Divresult id="result1"></Divresult> */}
-      </div>
+      </>
     );
   }
 }
