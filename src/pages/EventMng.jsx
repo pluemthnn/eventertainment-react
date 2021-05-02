@@ -306,7 +306,7 @@ class EventMngpage extends React.Component {
                           onClick={() => {
                           this.props.history.push("/Resulte/${i.EventID}");
                           }} style={{marginTop: "1rem", marginBottom: "1rem"}}>
-                          Infomation
+                          Information
                       </Button>
                     </Link>
                     </Mytd>

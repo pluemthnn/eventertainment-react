@@ -2,19 +2,21 @@ import styled from 'styled-components';
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DayJS from 'react-dayjs';
+import { Link } from 'react-router-dom'
 
 const MyRow = styled.div`
     text-align: middle;
-    margin:30px  30px  30px  0px;
-    padding: 100px 0px 100px 100px;
-    background-color: rgb(255, 231, 234);
+    margin:30px  30px  30px  30px;
+    padding: 50px 50px 50px 50px;
+    background-color: white;
     border-radius: 30px;
-    box-shadow: 12px 12px 22px rgba(0, 0, 0, 0.1);
-    width: fit-content;
+    //box-shadow: 12px 12px 22px rgba(0, 0, 0, 0.1);
+  //  width: 100px;
     block-size: fit-content;
     display: flex;
-    //  align-items: center;
-  //justify-content: center;
+
+  //    align-items: center;
+  // justify-content: center;
 ` 
 const B = styled.span`
     fontWeight: bold;
@@ -35,32 +37,35 @@ const resultpage = () => {
       });
   }, []);
   return (
-    <div className="py-3 px-3 mx-3 " >
-      <div className="container">
-        <MyRow>
-          <br></br><h1 className="pt-1" style={{fontSize: "40px" ,alignItems: "center"}}>User Information</h1><br></br>
-          {userlist &&
-            userlist.map((val) => {
-              return (
-                <div className="container px-4" key={val.Username}>
-                  <div className="row">
-                    <div className="col" style={{textAlign: "left"}}>
-                      <div className="p-3 "><B>UserName:</B> {val.Username}</div>
-                      <div className="p-3 "><B>Name:</B> {val.Fname} {val.Lname}</div>
-                      <div className="p-3 "><B>Password:</B> {val.User_pwd}</div>
+    <div>
+      <div className="container" style={{ alignItems: "center", justifyContent: "center", }}>
+        <section id="box" style={{paddingBottom: 20, margin: "auto", marginTop: 30}}>
+          <br></br><h1 className="pt-3" style={{fontSize: "40px"}}>User Information</h1>
+            <MyRow className="row" > 
+              {userlist &&
+                userlist.map((val) => {
+                  return (
+                    <div className="container" key={val.Username}>
+                      <div className="col">
+                        <div className="row" style={{textAlign: "left"}}>
+                          <div className="py-3 "><B>UserName:</B> {val.Username}</div>
+                          <div className="py-3 "><B>Name:</B> {val.Fname} {val.Lname}</div>
+                          <div className="py-3 "><B>Password:</B> {val.User_pwd}</div>
+                          </div>
+                          <div className="row" style={{textAlign: "left"}}>
+                          <div className="py-3 "><B>Birth Date: </B>
+                          <DayJS format="MM-DD-YYYY">{val.DOB}</DayJS>
+                          </div>
+                          <div className="py-3 "><B>E-mail:</B> {val.Email}</div>
+                          <div className="py-3 "><B>Phone number:</B> {val.Phone}</div>
+                        </div>
                       </div>
-                      <div className="col" style={{textAlign: "left"}}>
-                      <div className="p-3 "><B>Birth Date: </B>
-                      <DayJS format="MM-DD-YYYY">{val.DOB}</DayJS>
-                      </div>
-                      <div className="p-3 "><B>E-mail:</B> {val.Email}</div>
-                      <div className="p-3 "><B>Phone number:</B> {val.Phone}</div>
+                      <Link to="/UserMng" className="btn btn-primary">Edit</Link>
                     </div>
-                  </div>
-                </div>
-              );
-            })}
-        </MyRow>
+                  );
+                })}
+            </MyRow>
+        </section>
       </div>
     </div>
   );

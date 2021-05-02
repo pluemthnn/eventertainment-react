@@ -40,10 +40,10 @@ const Button = styled.button`
 `;
 
 class UserMngpage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userdata: [],
+    constructor(props) {
+      super(props);
+      this.state = {
+        userdata: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleusersearchall = this.handleusersearchall.bind(this);

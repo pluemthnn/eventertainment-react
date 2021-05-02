@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DayJS from 'react-dayjs';
-import { render } from 'react-dom';
+import { Link } from 'react-router-dom'
 
 const MyRow = styled.div`
     text-align: left;
@@ -57,6 +57,7 @@ const resultepage = () => {
                                                 <span><h4>Date and Time:<DayJS format="MM-DD-YYYY">{i.DATE_TIME}</DayJS></h4></span>
                                                 <span><h5>Description: {i.Event_Description}</h5></span>
                                                 {/* <div id='map' style=' width: 500px; height: 400px;'></div> */}
+                                                <Link to="/EventMng" className="btn btn-primary">Back</Link>
                                             </div>
                                         </div>
                                     </div>

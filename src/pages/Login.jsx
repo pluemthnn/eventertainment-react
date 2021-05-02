@@ -91,10 +91,10 @@ class Login extends React.Component {
             }
             if( role == " Admin"){
                 if (window.confirm(`Hello ${role} ${data.message}`)) {
-                    window.location.href = 'https://www.youtube.com/watch?v=yfvSTDBO0AU';
+                    window.location.href = 'http://localhost:4000/';
+
                 };
             }
-        // alert(`Hello, ${this.state.firstname} ${this.state.lastname}\nYour nationality is ${this.state.nationality}`);
     }
 
 
