@@ -17,6 +17,7 @@ const Button = styled.button`
 `;
 const MyRow = styled.div`
   margin-top: 30px;
+  padding-top:30px;
   background-color: rgb(255, 231, 234);
   border-radius: 30px;
   box-shadow: 12px 12px 22px rgba(0, 0, 0, 0.1);
@@ -28,7 +29,7 @@ const HomePage = (props) => {
         <h1 className="mt-4">Welcome to Admin Homepage</h1>
         <MyRow>
           {/* <h2>All event</h2> */}
-          <img src="https://www.flaticon.com/svg/vstatic/svg/1636/1636028.svg?token=exp=1619904228~hmac=cdf9157c4ca84511864934be2fbff077" />
+          <img src="https://raw.githubusercontent.com/gdoyssaga/eventertainment-react/ae6f05a588d75a2f1d383bfa6c5e9b39fc5faf86/event.svg" />
 
           <h5 className="py-3">Let's manage our lovely event</h5>
           <Button
