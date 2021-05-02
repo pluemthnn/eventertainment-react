@@ -23,7 +23,7 @@ function App() {
           <Route exact path='/EventMng' component={EventMng}/>
           <Route exact path='/Login' component={Login}/>
           {/* <Route exact path='/Result' component={Result}/> */}
-          <Route exact path='/Resulte' component={Resulte}/>
+          <Route exact path='/Resulte/:EventID' component={Resulte}/>
        {/* <Route exact path='/Result/:' component={Result}/> */}
           <Route exact path="/Result/:username" component={Result} />
       </Switch>

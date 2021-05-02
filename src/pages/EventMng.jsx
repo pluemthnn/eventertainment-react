@@ -1,6 +1,6 @@
 import "../components/admin.css";
 import styled from "styled-components";
-
+import { Link } from 'react-router-dom'
 
 
 const Mytable = styled.table`
@@ -14,6 +14,15 @@ const Mytd = styled.td`
   vertical-align: middle;
   text-align: middle;
   padding: 8px;
+  fontSize: "20px"
+`
+const Mytbody = styled.tbody`
+  color: white;
+  background-color: #f06e7e;
+  &:nth-child(even) {
+    color: black;
+    background: #ffe7ea;
+  }
 `
 
 const Button = styled.button`
@@ -279,23 +288,31 @@ class EventMngpage extends React.Component {
           </button>
         
           <div className="pb-5 pt-4" style={{ justifyContent: "center" }}>
-          <Mytable>
+          <Mytable className="pt-5">
             {this.state.eventdata &&
               this.state.eventdata.map((i) => {
                 return (
-                  <tbody key={i.EventID}>
+                  <Mytbody key={i.EventID}>
+                    <tr>
                     <Mytd>{i.EventID}</Mytd>
                     <Mytd>{i.Eventname}</Mytd>
                     {/* <p>{i.DATE_TIME}</p>
                     <p>{i.Location}</p>
                     <p>{i.Event_Description}</p> */}
                     <Mytd>{i.Eventtype}</Mytd>
-                    <Mytd><Button type="button"
+                    <Mytd style={{fontSize: "16px", paddingRight: "1rem"}}>
+                    <Link to={`/Resulte/${i.EventID}`}>
+                      <Button type="button"
                           onClick={() => {
-                          this.props.history.push("/Resulte");
-                          }}>Infomation</Button></Mytd>
+                          this.props.history.push("/Resulte/${i.EventID}");
+                          }} style={{marginTop: "1rem", marginBottom: "1rem"}}>
+                          Infomation
+                      </Button>
+                    </Link>
+                    </Mytd>
                     {/* <img src={i.imgURL} width="20%"></img> */}
-                  </tbody>
+                    </tr>
+                  </Mytbody>
                 );
               })}
           </Mytable>  

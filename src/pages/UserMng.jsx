@@ -1,5 +1,4 @@
 import "../components/admin.css";
-import DayJS from 'react-dayjs';
 import { Link } from 'react-router-dom'
 import styled from "styled-components";
 
@@ -10,10 +9,10 @@ const Mytable = styled.table`
 `
 
 const Mytd = styled.td`
-  // border: 3px solid #000000;
   vertical-align: middle;
   text-align: middle;
   padding: 8px;
+  fontSize: "20px"
 `
 const Mytbody = styled.tbody`
   color: white;
@@ -232,16 +231,19 @@ class UserMngpage extends React.Component {
                     return (
                       <Mytbody key={i.Username}>
                         <tr >
-                          <Mytd style={{fontSize: "20px"}}>{i.Username}</Mytd>
+                          <Mytd>{i.Username}</Mytd>
                           {/* <td>{i.User_pwd}</td> */}
                           {/* <Mytd>{i.Email}</Mytd> */}
-                          <Mytd style={{fontSize: "20px"}}>{i.Fname} {i.Lname}</Mytd>
-                          {/* <Mytd><DayJS format="MM-DD-YYYY">{i.DOB}</DayJS></Mytd> */}
+                          <Mytd>{i.Fname} {i.Lname}</Mytd>
                           {/* <Mytd>{i.Phone}</Mytd> */}
-                          <Mytd style={{fontSize: "16px", paddingRight: "1rem"}}><Link to={`/Result/${i.Username}`}><Button type="button"
+                          <Mytd style={{fontSize: "16px", paddingRight: "1rem"}}><Link to={`/Result/${i.Username}`}>
+                            <Button type="button"
                             onClick={() => {
                               this.props.history.push("/Result/${i.Username}");
-                            }} style={{marginTop: "1rem", marginBottom: "1rem"}}>Information</Button></Link></Mytd>
+                            }} style={{marginTop: "1rem", marginBottom: "1rem"}}>
+                            Information
+                          </Button></Link>
+                          </Mytd>
                         </tr>
                       </Mytbody>
                     );
